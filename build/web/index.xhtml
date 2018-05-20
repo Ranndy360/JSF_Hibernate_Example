@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Vehiculos</title>
+    </h:head>
+    <h:body>
+        <p:growl id="mensajeGeneral" autoUpdate="true" showDetail="true" life="3000"/>
+        <h:form >
+            <p:commandButton value="Nuevo Registro" oncomplete="PF('dlgNuevo').show();" update=":formInsertar"/>
+        </h:form>
+        <p:dialog id="dlgI" header="Nuevo Registro" widgetVar="dlgNuevo"  showEffect="explode" hideEffect="explode" modal="true">
+            <h:form id="formInsertar">
+                <p:panelGrid columns="2" style="margin: 0 auto">
+                    <p:outputLabel value="Marca:"/>
+                    <p:inputText value="#{vehiculoBean.vehiculo.marca}" maxlength="50" required="true" requiredMessage="Marca es obligatorio"/>
+                    <p:outputLabel value="Modelo:"/>
+                    <p:inputText value="#{vehiculoBean.vehiculo.modelo}" maxlength="50" required="true" requiredMessage="Modelo es obligatorio"/>
+                    <p:outputLabel value="Color"/>
+                    <p:inputText value="#{vehiculoBean.vehiculo.color}" maxlength="15" required="true" requiredMessage="Color es obligatorio"/>
+                    <p:outputLabel value="Fecha Compra"/>
+                    <p:calendar value="#{vehiculoBean.vehiculo.fechaCompra}" required="true"  requiredMessage="Fecha es obligatorio"/>
+                    <p:commandButton value="Cancelar" action="#{vehiculoBean.cancelar()}" update=":formInsertar" immediate="true" onclick="PF('dlgNuevo').hide();"/>
+                    <p:commandButton value="Guardar" actionListener="#{vehiculoBean.nuevoVehiculo()}" update=":formMostrarVehiculo:tablaMostrarVehiculo :formInsertar"
+                                     onclick="PF('dlgNuevo').hide();"/>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+        <p:separator />
+        <h:form id="formMostrarVehiculo">
+            <p:dataTable id="tablaMostrarVehiculo" var="veh" value="#{vehiculoBean.listaVehiculo}"
+                         emptyMessage="No hay datos que mostrar">
+                <p:column headerText="Id" filterBy="#{veh.idVehiculo}">
+                    <h:outputText value="#{veh.idVehiculo}"/>
+                </p:column>
+                <p:column headerText="Marca"  filterBy="#{veh.marca}">
+                    <h:outputText value="#{veh.marca}"/>
+                </p:column>
+                <p:column headerText="Modelo"  filterBy="#{veh.modelo}" >
+                    <h:outputText value="#{veh.modelo}"/>
+                </p:column>
+                <p:column headerText="Color"  filterBy="#{veh.color}">
+                    <h:outputText value="#{veh.color}"/>
+                </p:column>
+
+                <p:column headerText="Fecha compra"  sortBy="#{veh.fechaCompra}">
+                    <h:outputText value="#{veh.fechaCompra}"/>
+                </p:column>
+                <p:column headerText="" >
+                    <p:commandButton value="Modificar" oncomplete="PF('dlgModificar').show();" update=":formModificar" >
+                        <f:setPropertyActionListener target="#{vehiculoBean.vehiculo}"  value="#{veh}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="" >
+                    <p:commandButton value="Eliminar" oncomplete="PF('dlgEliminar').show();" update=":formEliminar" >
+                        <f:setPropertyActionListener target="#{vehiculoBean.vehiculo}"  value="#{veh}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog id="dlg" header="Modificar Registro" widgetVar="dlgModificar" showEffect="explode" hideEffect="explode" modal="true">
+            <h:form id="formModificar">
+               <p:panelGrid columns="2" style="margin: 0 auto">
+                <p:outputLabel value="Marca:"/>
+                <p:inputText value="#{vehiculoBean.vehiculo.marca}" maxlength="50" required="true" requiredMessage="Marca es obligatorio"/>
+                <p:outputLabel value="Modelo:"/>
+                <p:inputText value="#{vehiculoBean.vehiculo.modelo}" maxlength="50" required="true" requiredMessage="Modelo es obligatorio"/>
+                <p:outputLabel value="Color"/>
+                <p:inputText value="#{vehiculoBean.vehiculo.color}" maxlength="15" required="true" requiredMessage="Color es obligatorio"/>
+                <p:outputLabel value="Fecha Compra"/>
+                <p:calendar value="#{vehiculoBean.vehiculo.fechaCompra}" required="true"  requiredMessage="Fecha es obligatorio"/>
+                   <p:commandButton value="Actualizar" actionListener="#{vehiculoBean.modificarVehiculo()}" 
+                                    update=":formMostrarVehiculo:tablaMostrarVehiculo :formModificar" oncomplete="PF('dlgModificar').hide();"/>
+                   <p:commandButton value="Cancelar" onclick="PF('dlgModificar').hide();" immediate="true"/>
+               </p:panelGrid>
+           </h:form>
+        </p:dialog>
+         <p:dialog id="dlgE" header="Eliminar Registro" widgetVar="dlgEliminar" showEffect="explode" hideEffect="explode" modal="true">
+            <h:form id="formEliminar">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton value="Si" actionListener="#{vehiculoBean.eliminarVehiculo()}"
+                                 update=":formMostrarVehiculo:tablaMostrarVehiculo" oncomplete="PF('dlgEliminar').hide();"/>
+                <p:commandButton value="No" onclick="PF('dlgEliminar').hide();" />
+           </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

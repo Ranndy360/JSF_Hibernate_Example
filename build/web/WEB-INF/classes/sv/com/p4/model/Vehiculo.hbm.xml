@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-18-2018 04:53:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sv.com.p4.model.Vehiculo" table="vehiculo" catalog="renta" optimistic-lock="version">
+        <id name="idVehiculo" type="java.lang.Long">
+            <column name="id_vehiculo" />
+            <generator class="identity" />
+        </id>
+        <property name="marca" type="string">
+            <column name="marca" length="80" not-null="true" />
+        </property>
+        <property name="modelo" type="string">
+            <column name="modelo" length="80" not-null="true" />
+        </property>
+        <property name="color" type="string">
+            <column name="color" length="50" not-null="true" />
+        </property>
+        <property name="fechaCompra" type="timestamp">
+            <column name="fecha_compra" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
