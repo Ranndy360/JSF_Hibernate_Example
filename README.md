@@ -11,6 +11,7 @@ JSF web Example CRUD using Hibernate for database and Primefaces for views
 * Apache Tomacat 8
 * JSF 2.2
 * Hibernate 4.3.1
+* Primeface 5.0
 * Mysql 5.0.12 - Xamp
 
 
